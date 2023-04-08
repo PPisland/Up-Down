@@ -7,7 +7,8 @@ import { useState } from "react";
 export const AppContext = createContext();
 
 function App() {
-  const [Nupoint, setNuPoint] = useState(0);
+  const [NuPoint, setNuPoint] = useState(0);
+  const [SaPoint, setSaPoint] = useState(JSON.stringify([]));
   useEffect(() => {
     let savedPoint = localStorage.getItem("point");
     if (!savedPoint) {
@@ -15,12 +16,16 @@ function App() {
       setNuPoint(localStorage.getItem("point"));
     }
   }, []);
-  // console.log({ Nupoint });
-
-  // const [CurrentPoint, setCpoint] = useState(localStorage.getItem("point"));
+  useEffect(() => {
+    let savedScore = localStorage.getItem("score");
+    if (!savedScore) {
+      localStorage.setItem("score", JSON.stringify([]));
+      setSaPoint(localStorage.getItem("score"));
+    }
+  }, []);
 
   return (
-    <AppContext.Provider value={{ Nupoint, setNuPoint }}>
+    <AppContext.Provider value={{ NuPoint, setNuPoint, SaPoint, setSaPoint }}>
       <div className="flex flex-col justify-center items-center min-h-screen">
         <GameResult />
         <GameBoard />

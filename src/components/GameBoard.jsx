@@ -9,6 +9,7 @@ const GameBoard = () => {
   const [hint, setHint] = useState("0~100 사이의 숫자를 맞춰보세요!");
   const [point, setPoint] = useState(5);
   const { NuPoint, setNuPoint } = useContext(AppContext);
+  const { SaPoint, setSaPoint } = useContext(AppContext);
 
   useEffect(() => {
     console.log(`랜덤 숫자 ${randomNum}입니다.`);
@@ -45,10 +46,18 @@ const GameBoard = () => {
       if (point > 0) {
         // 기존의 점수 불러옴
         let savePoint = localStorage.getItem("point");
+        let saveScore = localStorage.getItem("score");
+
+        let ScoreArray = JSON.parse(saveScore);
+        ScoreArray.push(point);
+        // console.log(typeof ScoreArray);
         // 현재 점수와 기존의 점수 합침
         // 저장
         localStorage.setItem("point", parseInt(savePoint) + point);
+        localStorage.setItem("score", JSON.stringify(ScoreArray));
         setNuPoint(localStorage.getItem("point"));
+        setSaPoint(localStorage.getItem("score"));
+        // console.log(SaPoint);
       }
       //초기화
       setRandomNum(Math.floor(Math.random() * 100));

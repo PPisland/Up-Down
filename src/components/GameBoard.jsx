@@ -4,9 +4,14 @@ import { AppContext } from "../App";
 import { useContext } from "react";
 
 const GameBoard = () => {
-  const [randomNum, setRandomNum] = useState(Math.floor(Math.random() * 100));
+  const { CurrentRound, setCurrentRound } = useContext(AppContext);
+  const [randomNum, setRandomNum] = useState(
+    Math.floor(Math.random() * CurrentRound * 20)
+  );
   const [choiceNum, setChoiceNum] = useState("");
-  const [hint, setHint] = useState("0~100 사이의 숫자를 맞춰보세요!");
+  const [hint, setHint] = useState(
+    `0~${CurrentRound * 20} 사이의 숫자를 맞춰보세요!`
+  );
   const [point, setPoint] = useState(5);
   const { NuPoint, setNuPoint } = useContext(AppContext);
   const { SaPoint, setSaPoint } = useContext(AppContext);
@@ -21,6 +26,18 @@ const GameBoard = () => {
   useEffect(() => {
     console.log(`현재 점수는 ${point}입니다.`);
   }, [point]);
+  useEffect(() => {
+    let arrayS = JSON.parse(SaPoint);
+
+    if (arrayS.length > 5) {
+      setCurrentRound(1);
+      setHint("라이프를 모두 소진하셨습니다 처음부터 다시 진행하세요");
+      localStorage.setItem("point", 0);
+      localStorage.setItem("score", JSON.stringify([]));
+      setSaPoint(localStorage.getItem("score"));
+      setNuPoint(localStorage.getItem("point"));
+    }
+  }, [SaPoint]);
 
   const onChangeChocie = (e) => {
     // console.log(e.target.value);
@@ -30,13 +47,14 @@ const GameBoard = () => {
   const onClickCheck = () => {
     let checkNum = parseInt(choiceNum);
     //1.문자입력
+
     if (isNaN(checkNum)) {
       setHint("숫자를 입력해주세요");
       return;
     }
     // 2. 0~100 이외의 숫자 예외처리
-    if (0 > checkNum || checkNum >= 100) {
-      setHint("0~100 사이의 숫자를 입력해주세요");
+    if (0 > checkNum || checkNum >= CurrentRound * 20) {
+      setHint(`0~${CurrentRound * 20} 사이의 숫자를 입력해주세요`);
       return;
     }
     //랜덤숫자와 유저가 선택한 숫자 비교
@@ -58,9 +76,11 @@ const GameBoard = () => {
         setNuPoint(localStorage.getItem("point"));
         setSaPoint(localStorage.getItem("score"));
         // console.log(SaPoint);
+        console.log(NuPoint);
+        console.log(CurrentRound);
       }
       //초기화
-      setRandomNum(Math.floor(Math.random() * 100));
+      setRandomNum(Math.floor(Math.random() * CurrentRound * 20));
       setChoiceNum("");
       setPoint(5);
     } else if (randomNum > checkNum) {

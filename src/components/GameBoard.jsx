@@ -29,13 +29,16 @@ const GameBoard = () => {
   useEffect(() => {
     let arrayS = JSON.parse(SaPoint);
 
-    if (arrayS.length > 5) {
+    if (arrayS.length > 6) {
       setCurrentRound(1);
       setHint("라이프를 모두 소진하셨습니다 처음부터 다시 진행하세요");
       localStorage.setItem("point", 0);
       localStorage.setItem("score", JSON.stringify([]));
       setSaPoint(localStorage.getItem("score"));
       setNuPoint(localStorage.getItem("point"));
+      setRandomNum(Math.floor(Math.random() * CurrentRound * 20));
+      setChoiceNum("");
+      setPoint(5);
     }
   }, [SaPoint]);
 

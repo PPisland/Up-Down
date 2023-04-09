@@ -48,7 +48,7 @@ function App() {
       }}
     >
       <div className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 flex flex-col justify-center items-center min-h-screen font-display ">
-        {CurrentRound === 5 ? (
+        {CurrentRound === 6 ? (
           <WinGame />
         ) : (
           <>

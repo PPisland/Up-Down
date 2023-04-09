@@ -48,14 +48,14 @@ const GameResult = () => {
         <div>1. 총 5라운드로 구성되어있습니다.</div>
         <div>2. 각 라운드당 20점을 획득하면 다음 라운드로 진행됩니다.</div>
         <div>
-          3. 라이프는 한 라운드당 5개가 지급되며 실패시 1라운드로 돌아갑니다.
+          3. 라이프는 한 라운드당 6개가 지급되며 실패시 1라운드로 돌아갑니다.
         </div>
         <div>4. 각 라운드마다 20씩 숫자의 범위가 늘어납니다.</div>
       </div>
       <div className="text-8xl font-black text-shadow mb-8 animate-bounce">
         Up & Down
       </div>
-      <div className="text-2xl">현재점수 : {NuPoint}</div>
+      <div className="text-2xl">Score : {NuPoint}</div>
       <ul className="absolute grid grid-cols-10  top-0  mt-4">
         {array.map((v, i) => {
           return (

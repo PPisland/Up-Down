@@ -9,7 +9,8 @@ const GameBoard = () => {
     Math.floor(Math.random() * CurrentRound * 20)
   );
   const [choiceNum, setChoiceNum] = useState("");
-  const [hint, setHint] = useState(
+  const [hint, setHint] = useState(`Up & Down Game !!`);
+  const [hint2, setHint2] = useState(
     `0~${CurrentRound * 20} 사이의 숫자를 맞춰보세요!`
   );
   const [point, setPoint] = useState(5);
@@ -40,7 +41,10 @@ const GameBoard = () => {
       setChoiceNum("");
       setPoint(5);
     }
-  }, [SaPoint]);
+  }, [SaPoint, CurrentRound]);
+  useEffect(() => {
+    setHint2(`0~${CurrentRound * 20} 사이의 숫자를 맞춰보세요!`);
+  }, [CurrentRound]);
 
   const onChangeChocie = (e) => {
     // console.log(e.target.value);
@@ -97,6 +101,7 @@ const GameBoard = () => {
 
   return (
     <div className="w-full grow flex flex-col justify-center items-center">
+      <div className="mb-4 text-xl font-bold">{hint2}</div>
       <div className="mb-4 text-xl font-bold">{hint}</div>
       <div>
         <input
